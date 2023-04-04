@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 19.x]
+        node-version: [16.x, 18.x]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Get Yarn cache directory
@@ -25,12 +25,12 @@ jobs:
         run: echo "::set-output name=YARN_VERSION::$(yarn --version)"
         id: yarn-version
       - name: Cache yarn dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.yarn-cache-dir.outputs.YARN_CACHE_DIR }}
           key: yarn-cache-${{ runner.os }}-${{ steps.yarn-version.outputs.YARN_VERSION }}-${{ hashFiles('yarn.lock') }}
       - run: yarn install --immutable
-      - run: yarn build:snap
+      - run: yarn build
       - run: yarn test
       - run: yarn lint
       - name: Require clean working directory
