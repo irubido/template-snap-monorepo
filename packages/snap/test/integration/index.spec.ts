@@ -19,6 +19,7 @@ describe('snap', function () {
       automation: 'playwright',
       snapIdOrLocation: path.resolve(__dirname, '../..'),
       installationSnapUrl: DAPP_PAGE,
+      headless: false,
     }));
 
     connectedPage = await metaMask.page.browser().newPage();
